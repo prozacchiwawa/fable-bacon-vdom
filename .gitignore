@@ -1,0 +1,6 @@
+*~
+out
+node_modules
+js/fable-core.js
+js/test.js
+js/test.js.map
