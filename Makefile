@@ -6,9 +6,9 @@ clean:
 out:
 	mkdir $@
 
-out/test.js: test.fsx
-	fable $<
+js/test.js: test.fsx
+	fable --projFile $< --outDir js
 
-out/vdomtest.js: out/test.js js/vdominterface.js
+out/vdomtest.js: js/test.js js/vdominterface.js
 	browserify -e js/vdominterface.js -o $@
 

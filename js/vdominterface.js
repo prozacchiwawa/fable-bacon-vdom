@@ -13,7 +13,6 @@ var element = document.getElementById('app');
 var eventQueue = [];
 var eventHookType = function(eventfun) { this.eventfun = eventfun; };
 eventHookType.prototype.hook = function(node, propertyName, previousValue) {
-    console.log(node);
     var eventName = propertyName.substr(2);
     node.__eventHandlers = node.__eventHandlers || {};
     if (node.__eventHandlers[eventName]) {
@@ -51,23 +50,19 @@ var vnode = function(tag) {
 }
 var post = function(stream) {
     return function(msg) {
-        console.log('post',stream,msg);
         stream.push(msg);
     };
 }
 var msgStream = Bacon.Bus();
 var program = test.default.main({ vnode: vnode, vtext, vtext, post: post, stream: msgStream });
 var stateStream = msgStream.scan(program.init(), function(state,msg) {
-    console.log('update',state,msg);
     return program.update(msg, state);
 });
 var domStream = stateStream.map(function (state) {
-    console.log('view',state);
     return program.view(state);
 });
 domStream.subscribe(function(tree_) {
     var tree = tree_.value();
-    console.log('dom',tree);
     if (!rootElement) {
         rootElement = createElement(tree);
         element.appendChild(rootElement);
