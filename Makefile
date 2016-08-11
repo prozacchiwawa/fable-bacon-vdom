@@ -10,5 +10,5 @@ js/test.js: test.fsx
 	fable --projFile $< --outDir js
 
 out/vdomtest.js: js/test.js js/vdominterface.js
-	browserify -e js/vdominterface.js -o $@
+	browserify -e js/testprog.js -o $@
 

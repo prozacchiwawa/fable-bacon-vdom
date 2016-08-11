@@ -13,3 +13,8 @@ type 'msg VDom =
       stream : 'msg MsgStream;
     }
 
+type ('init, 'msg, 'state) Program = 
+    { init : 'init -> 'state;
+      update : 'msg -> 'state -> 'state;
+      view : 'state -> VNode
+    }

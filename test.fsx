@@ -9,14 +9,8 @@ open Fable.Import.Browser
 type State = { a : int; b : string }
 type Msg = NoOp | Text of string
 
-type ('msg, 'state) Program = 
-    { init : unit -> 'state;
-      update : 'msg -> 'state -> 'state;
-      view : 'state -> VDom.VNode
-    }
-
-let init () =
-    { a = 0; b = "Hi there" }
+let init arg =
+    { a = 0; b = arg }
 
 let update action state =
     match action with
@@ -27,8 +21,8 @@ let view (vdom : Msg VDom.VDom) state =
     let response = fun evt -> (vdom.post vdom.stream (Text "Clicked!")) in
     (vdom.vnode "button" [{name="className"; value="testbutton"}] [{name="click"; response=response}] [vdom.vtext (String.concat "" [Util.toString state.a; " "; state.b])])
 
-let main vdom =
-    { init = init;
-      update = update;
-      view = (view vdom)
+let main vdom arg =
+    { VDom.init = init;
+      VDom.update = update;
+      VDom.view = (view vdom)
     }
